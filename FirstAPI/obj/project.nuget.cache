@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "f+F8j/PI1EI=",
+  "success": true,
+  "projectFilePath": "D:\\Learning\\.NETCore\\FirstAPI\\FirstAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.1\\microsoft.aspnetcore.openapi.10.0.1.nupkg.sha512",
+    "C:\\Users\\Dell\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
