@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Learning\\.NETCore\\FirstAPI\\FirstAPI.csproj": {}
+    "d:\\Learning\\.NETCore\\FirstAPI\\FirstAPI.csproj": {}
   },
   "projects": {
-    "D:\\Learning\\.NETCore\\FirstAPI\\FirstAPI.csproj": {
+    "d:\\Learning\\.NETCore\\FirstAPI\\FirstAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Learning\\.NETCore\\FirstAPI\\FirstAPI.csproj",
+        "projectUniqueName": "d:\\Learning\\.NETCore\\FirstAPI\\FirstAPI.csproj",
         "projectName": "FirstAPI",
-        "projectPath": "D:\\Learning\\.NETCore\\FirstAPI\\FirstAPI.csproj",
+        "projectPath": "d:\\Learning\\.NETCore\\FirstAPI\\FirstAPI.csproj",
         "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-        "outputPath": "D:\\Learning\\.NETCore\\FirstAPI\\obj\\",
+        "outputPath": "d:\\Learning\\.NETCore\\FirstAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -53,6 +53,20 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[10.0.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[10.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[10.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.0.3, )"
             }
           },
           "imports": [
