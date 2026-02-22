@@ -28,9 +28,9 @@ namespace FirstAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            return Ok($"Get Weather Data of Id: {id}");
+            return Ok(await _weatherService.GetById(id));
         }
 
         [HttpDelete("{id}")]
