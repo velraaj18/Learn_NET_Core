@@ -33,10 +33,22 @@ namespace FirstAPI.Controllers
             return Ok(await _weatherService.GetById(id));
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteById(int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateWeather(int id, Weather weather)
         {
-            return Ok($"Delete Weather Data by Id: {id}");
+            var result = await _weatherService.Update(id, weather);
+            if(!result) return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteById(int id)
+        {
+            var result = await _weatherService.Delete(id);
+            if(!result) return NotFound();
+
+            return NoContent();
         }
     }
 }
