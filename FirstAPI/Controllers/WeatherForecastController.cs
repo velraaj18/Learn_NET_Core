@@ -2,6 +2,7 @@ using AutoMapper;
 using FirstAPI.DTO;
 using FirstAPI.Models;
 using FirstAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,9 +24,10 @@ namespace FirstAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
-            throw new Exception("Testing the exception middleware");
+            //throw new Exception("Testing the exception middleware");
             
             return Ok(await _weatherService.GetAll());
         }
