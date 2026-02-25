@@ -1,15 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace FirstAPI.Models;
+namespace FirstAPI.DTO;
 
-public class Weather
+public class WeatherRequest
 {
-    public int Id { get; set; }
     [Required]
     [StringLength(25)]
-    public string City { get; set; }
-    
+    public string City {get; set;}
+
     [Range(-100, 100)]
     public int Temperature { get; set; }
 }

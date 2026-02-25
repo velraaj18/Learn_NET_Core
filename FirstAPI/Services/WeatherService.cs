@@ -20,7 +20,7 @@ public class WeatherService
         return await _dbContext.Weathers.ToListAsync();
     }
 
-    public async Task<Weather?> GetById(int id)
+    public async Task<Weather> GetById(int id)
     {
         return await _dbContext.Weathers.FindAsync(id);
     } 
