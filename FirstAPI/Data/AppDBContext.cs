@@ -12,4 +12,5 @@ public class AppDBContext : DbContext
     }
 
     public DbSet<Weather> Weathers { get; set; }
+    public DbSet<User> Users {get; set;}
 }

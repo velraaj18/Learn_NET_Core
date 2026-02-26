@@ -23,7 +23,6 @@
     <Folder Include="DTO\" />
     <Folder Include="Mappings\" />
     <Folder Include="Middleware\" />
-    <Folder Include="Models\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
