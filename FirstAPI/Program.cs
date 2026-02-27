@@ -1,8 +1,10 @@
 using FirstApi.Middleware;
 using FirstAPI.Data;
 using FirstAPI.Mappings;
+using FirstAPI.Models;
 using FirstAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -45,6 +47,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<PasswordHasher<User>>();
 
 var app = builder.Build();
 
