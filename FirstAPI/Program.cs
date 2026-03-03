@@ -48,6 +48,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<PasswordHasher<User>>();
+builder.Services.AddScoped<AuthService>();
 
 var app = builder.Build();
 
