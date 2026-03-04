@@ -66,7 +66,7 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
 
-// Add Use Authentication and Use Authorization to validate the JWT token before it reaches the API controllers.
+// Add Use Authentication and Use Authorization to validate the JWT token (the configuration we added before [AddAuthentication]) before it reaches the API controllers.
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
