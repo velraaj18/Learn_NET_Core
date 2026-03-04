@@ -28,7 +28,7 @@ namespace FirstAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<APIResponse<User>> Login(UserRequest request)
+        public async Task<APIResponse<dynamic>> Login(UserRequest request)
         {
             var result = await _authServie.Login(request);
             return result;

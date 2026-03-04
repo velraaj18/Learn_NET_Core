@@ -1,5 +1,6 @@
 using FirstApi.Middleware;
 using FirstAPI.Data;
+using FirstAPI.DTO;
 using FirstAPI.Mappings;
 using FirstAPI.Models;
 using FirstAPI.Services;
@@ -23,6 +24,9 @@ builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(buil
 
 // Register Auto mapper profiles
 builder.Services.AddAutoMapper(typeof(Program));
+
+// This is to get the app settings strongly typed and use it controllers by injecting <IOptions>
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
 // JWT settings
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");

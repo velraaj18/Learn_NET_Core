@@ -1,6 +1,7 @@
 using System;
 using FirstAPI.Data;
 using FirstAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ public class WeatherService
         _dbContext = dBContext;
     }
 
+    [Authorize]
     public async Task<List<Weather>> GetAll()
     {
         return await _dbContext.Weathers.ToListAsync();
