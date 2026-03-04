@@ -17,12 +17,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 // Add services for dependency injection
+// Everytime we add an service which might be used in many places we need to register them instead of creating new instances in every place.
 builder.Services.AddScoped<WeatherService>();
+builder.Services.AddScoped<AuthService>();
+
+// Built in password hasher
+builder.Services.AddScoped<PasswordHasher<User>>();
 
 // Register DB context
 builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register Auto mapper profiles
+// Any class that inherits from AutoMapper's "Profile" class it will be registered.
 builder.Services.AddAutoMapper(typeof(Program));
 
 // This is to get the app settings strongly typed and use it controllers by injecting <IOptions>
@@ -31,6 +37,7 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSet
 // JWT settings
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 
+// For JWT, first we need to configure "Add Authentication" and then "Add Authorization"
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -51,15 +58,15 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<PasswordHasher<User>>();
-builder.Services.AddScoped<AuthService>();
+
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionMiddleware>();
+
+// Add Use Authentication and Use Authorization to validate the JWT token before it reaches the API controllers.
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
