@@ -1,7 +1,9 @@
+using System.Security.Claims;
 using AutoMapper;
 using FirstAPI.DTO;
 using FirstAPI.Models;
 using FirstAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,6 +41,18 @@ namespace FirstAPI.Controllers
         {
             var result = await _authServie.RefreshToken(request);
             return result;
+        }
+
+        [Authorize]
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var user = HttpContext.User;
+            var userId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            await _authServie.Logout(userId);
+
+            return StatusCode(200, new { message = "Logged out sucessfully" });
         }
     }
 }

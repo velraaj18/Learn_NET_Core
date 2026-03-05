@@ -203,4 +203,17 @@ public class AuthService
 
         return tokenString;
     }
+
+    public async Task Logout(string userId)
+    {
+        if (!int.TryParse(userId, out int id)) return;
+
+        var refreshTokens = await _dbContext.RefreshTokens
+            .Where(x => x.UserId == id)
+            .ToListAsync();
+
+        foreach (var token in refreshTokens) token.IsRevoked = true;
+
+        await _dbContext.SaveChangesAsync();
+    }
 }
