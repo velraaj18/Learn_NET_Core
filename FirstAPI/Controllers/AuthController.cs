@@ -33,5 +33,12 @@ namespace FirstAPI.Controllers
             var result = await _authServie.Login(request);
             return result;
         }
+
+        [HttpPost("RefreshToken")]
+        public async Task<APIResponse<dynamic>> RefreshToken(RefreshTokenReq request)
+        {
+            var result = await _authServie.RefreshToken(request);
+            return result;
+        }
     }
 }

@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Mappings\" />
     <Folder Include="Middleware\" />
     <Folder Include="Services\" />
