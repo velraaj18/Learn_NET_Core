@@ -16,10 +16,9 @@ public class WeatherService
         _dbContext = dBContext;
     }
 
-    [Authorize]
-    public async Task<List<Weather>> GetAll()
+    public async Task<List<Weather>> GetAll(int page, int pageSize)
     {
-        return await _dbContext.Weathers.ToListAsync();
+        return await _dbContext.Weathers.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
     public async Task<Weather> GetById(int id)

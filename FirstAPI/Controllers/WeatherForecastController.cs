@@ -23,13 +23,14 @@ namespace FirstAPI.Controllers
             _mapper = mapper;
         }
 
+        // Apply pagination
+        // To get 10 records per page
         [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int page=1, int pageSize=10)
         {
             //throw new Exception("Testing the exception middleware");
             
-            return Ok(await _weatherService.GetAll());
+            return Ok(await _weatherService.GetAll(page, pageSize));
         }
 
         [HttpPost]
