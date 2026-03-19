@@ -20,6 +20,7 @@ builder.Services.AddControllers();
 // Everytime we add an service which might be used in many places we need to register them instead of creating new instances in every place.
 builder.Services.AddScoped<WeatherService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<TransactionService>();
 
 // Built in password hasher
 builder.Services.AddScoped<PasswordHasher<User>>();
