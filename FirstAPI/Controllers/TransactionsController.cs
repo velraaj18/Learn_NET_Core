@@ -24,6 +24,11 @@ namespace FirstAPI.Controllers
             return response;
         }
 
-        
+        public Task<APIResponse<Transaction>> Post(TransactionRequest req)
+        {
+            var response = _service.PostTransaction(req);
+            return response;
+        }
+
     }
 }
