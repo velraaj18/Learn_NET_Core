@@ -21,6 +21,8 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<WeatherService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<TransactionService>();
+builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<AccountService>();
 
 // Built in password hasher
 builder.Services.AddScoped<PasswordHasher<User>>();
@@ -59,8 +61,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-
-builder.WebHost.UseUrls("http://0.0.0.0:8080");
 
 
 var app = builder.Build();

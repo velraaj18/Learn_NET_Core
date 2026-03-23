@@ -17,7 +17,7 @@ public class TransactionService
     public async Task<APIResponse<List<Transaction>>> GetAllTransactions()
     {
         var result = await _db.Transactions.ToListAsync();
-        if (result == null)
+        if (result.Count == 0)
         {
             return new APIResponse<List<Transaction>> { Data = null, Message = "No Transaction found", StatusCode = 200 };
         }
@@ -45,11 +45,53 @@ public class TransactionService
         _db.Transactions.Add(transaction);
         await _db.SaveChangesAsync();
 
-         return new APIResponse<Transaction>
+        return new APIResponse<Transaction>
         {
             StatusCode = 201,
             Message = "Transaction added successfully",
             Data = transaction
         };
+    }
+
+    public async Task<APIResponse<Transaction>> UpdateTransaction(int id, TransactionRequest req)
+    {
+        if (req == null)
+        {
+            return new APIResponse<Transaction> { StatusCode = 400, Message = "You must provide the details", Data = null };
+        }
+
+        var transaction = await _db.Transactions.FindAsync(id);
+        if (transaction == null)
+        {
+            return new APIResponse<Transaction> { StatusCode = 404, Message = "Transaction Not found", Data = null };
+        }
+
+        transaction.Amount = req.Amount;
+        transaction.CategoryUID = req.CategoryUID;
+        transaction.AccountUID = req.AccountUID;
+        transaction.Date = req.Date;
+        transaction.Description = req.Description;
+
+        await _db.SaveChangesAsync();
+
+        return new APIResponse<Transaction>
+        {
+            StatusCode = 201,
+            Message = "Transaction Updated successfully",
+            Data = transaction
+        };
+    }
+
+    public async Task<APIResponse<Transaction>> DeleteTransaction(int id)
+    {
+        var transaction = await _db.Transactions.FindAsync(id);
+
+        if (transaction == null)
+            return new APIResponse<Transaction> { StatusCode = 404, Message = "Transaction not found", Data = null };
+
+        _db.Transactions.Remove(transaction);
+        await _db.SaveChangesAsync();
+
+        return new APIResponse<Transaction> { StatusCode = 200, Message = "Transaction deleted successfully", Data = transaction };
     }
 }

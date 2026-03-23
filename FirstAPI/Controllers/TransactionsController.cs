@@ -24,9 +24,24 @@ namespace FirstAPI.Controllers
             return response;
         }
 
+        [HttpPost]
         public Task<APIResponse<Transaction>> Post(TransactionRequest req)
         {
             var response = _service.PostTransaction(req);
+            return response;
+        }
+
+        [HttpPut("{id}")]
+        public Task<APIResponse<Transaction>> Update(int id, TransactionRequest req)
+        {
+            var response = _service.UpdateTransaction(id, req);
+            return response;
+        }
+
+        [HttpDelete("{id}")]
+        public Task<APIResponse<Transaction>> Delete(int id)
+        {
+            var response = _service.DeleteTransaction(id);
             return response;
         }
 
