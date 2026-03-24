@@ -44,6 +44,5 @@ namespace FirstAPI.Controllers
             var response = _service.DeleteTransaction(id);
             return response;
         }
-
     }
 }
