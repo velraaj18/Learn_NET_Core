@@ -62,6 +62,15 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
+// CORS policy
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact", policy=>
+    {
+        policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 
 var app = builder.Build();
 
@@ -72,6 +81,9 @@ app.UseMiddleware<ExceptionMiddleware>();
 // Add Use Authentication and Use Authorization to validate the JWT token (the configuration we added before [AddAuthentication]) before it reaches the API controllers.
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Allow cors
+app.UseCors("AllowReact");
 app.MapControllers();
 
 app.Run();
