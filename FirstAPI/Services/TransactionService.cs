@@ -14,15 +14,24 @@ public class TransactionService
         _db = db;
     }
 
-    public async Task<APIResponse<List<Transaction>>> GetAllTransactions()
+    public async Task<APIResponse<List<TransactionResponse>>> GetAllTransactions()
     {
-        var result = await _db.Transactions.ToListAsync();
+        var result = await _db.Transactions.Include(t => t.Category).Include(t => t.Account).Select(t => new TransactionResponse
+        {
+            TransactionUID = t.TransactionUID,
+            Date = t.Date,
+            Description = t.Description,
+            Amount = t.Amount,
+            Category = t.Category.CategoryName,
+            Account = t.Account.AccountName
+        }).ToListAsync();
+
         if (result.Count == 0)
         {
-            return new APIResponse<List<Transaction>> { Data = null, Message = "No Transaction found", StatusCode = 200 };
+            return new APIResponse<List<TransactionResponse>> { Data = null, Message = "No Transaction found", StatusCode = 200 };
         }
 
-        return new APIResponse<List<Transaction>> { Data = result, Message = "Transactions fetched successfully", StatusCode = 200 };
+        return new APIResponse<List<TransactionResponse>> { Data = result, Message = "Transactions fetched successfully", StatusCode = 200 };
     }
 
     public async Task<APIResponse<Transaction>> PostTransaction(TransactionRequest req)

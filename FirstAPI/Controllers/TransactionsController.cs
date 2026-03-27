@@ -18,7 +18,7 @@ namespace FirstAPI.Controllers
         }
 
         [HttpGet("GetAllTransactions")]
-        public Task<APIResponse<List<Transaction>>> GetAll()
+        public Task<APIResponse<List<TransactionResponse>>> GetAll()
         {
             var response = _service.GetAllTransactions();
             return response;
