@@ -22,7 +22,9 @@ public class TransactionService
             Date = t.Date,
             Description = t.Description,
             Amount = t.Amount,
+            CategoryId = t.CategoryUID,
             Category = t.Category.CategoryName,
+            AccountId = t.AccountUID,
             Account = t.Account.AccountName
         }).ToListAsync();
 
