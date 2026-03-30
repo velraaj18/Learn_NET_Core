@@ -1,6 +1,7 @@
 using System;
 using FirstAPI.Data;
 using FirstAPI.DTO;
+using FirstAPI.DTO.Transactions;
 using FirstAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -104,5 +105,16 @@ public class TransactionService
         await _db.SaveChangesAsync();
 
         return new APIResponse<Transaction> { StatusCode = 200, Message = "Transaction deleted successfully", Data = transaction };
+    }
+
+    public async Task<APIResponse<List<TransactionCategorySummary>>> GetByCategory()
+    {
+        var summary = await _db.Transactions.GroupBy(x => x.Category.CategoryName).Select(g => new TransactionCategorySummary
+        {
+            CategoryName = g.Key,
+            TotalAmount = g.Sum(x => x.Amount)
+        }).ToListAsync();
+
+        return new APIResponse<List<TransactionCategorySummary>>{ StatusCode = 200, Message= "Summary Retrieved", Data= summary};
     }
 }

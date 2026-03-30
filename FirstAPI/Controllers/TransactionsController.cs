@@ -1,4 +1,5 @@
 using FirstAPI.DTO;
+using FirstAPI.DTO.Transactions;
 using FirstAPI.Models;
 using FirstAPI.Services;
 using Microsoft.AspNetCore.Http;
@@ -42,6 +43,13 @@ namespace FirstAPI.Controllers
         public Task<APIResponse<Transaction>> Delete(int id)
         {
             var response = _service.DeleteTransaction(id);
+            return response;
+        }
+
+        [HttpGet("Category-Summary")]
+        public Task<APIResponse<List<TransactionCategorySummary>>> GetByCategory()
+        {
+            var response = _service.GetByCategory();
             return response;
         }
     }

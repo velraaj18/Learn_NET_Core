@@ -16,7 +16,7 @@ public class Transaction
     public int AccountUID { get; set; }
     public DateTime Date { get; set; }
     public string Description { get; set; }
-    [Precision(18, 4)]
+    [Precision(18, 2)]
     public decimal Amount { get; set; }
     public Category Category { get; set; }
     public Account Account { get; set; }
