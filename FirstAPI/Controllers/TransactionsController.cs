@@ -59,5 +59,12 @@ namespace FirstAPI.Controllers
             var response = _service.GetByAccount();
             return response;
         }
+
+        [HttpGet("Monthly-Summary")]
+        public Task<APIResponse<List<TransactionMonthSummary>>> GetByMonth()
+        {
+            var response = _service.GetByMonth();
+            return response;
+        }
     }
 }

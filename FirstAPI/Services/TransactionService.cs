@@ -115,7 +115,7 @@ public class TransactionService
             TotalAmount = g.Sum(x => x.Amount)
         }).ToListAsync();
 
-        return new APIResponse<List<TransactionCategorySummary>>{ StatusCode = 200, Message= "Summary Retrieved", Data= summary};
+        return new APIResponse<List<TransactionCategorySummary>> { StatusCode = 200, Message = "Summary Retrieved", Data = summary };
     }
 
     public async Task<APIResponse<List<TransactionAccountSummary>>> GetByAccount()
@@ -127,8 +127,32 @@ public class TransactionService
             TotalAmount = g.Sum(x => x.Amount)
         }).ToListAsync();
 
-        return new APIResponse<List<TransactionAccountSummary>>{ StatusCode = 200, Message= "Summary Retrieved", Data= summary};
+        return new APIResponse<List<TransactionAccountSummary>> { StatusCode = 200, Message = "Summary Retrieved", Data = summary };
     }
 
-    
+    public async Task<APIResponse<List<TransactionMonthSummary>>> GetByMonth()
+    {
+        var summary = await _db.Transactions
+            .GroupBy(x => new { x.Date.Year, x.Date.Month, x.Category.CategoryName })
+            .Select(g => new
+            {
+                g.Key.Year,
+                g.Key.Month,
+                g.Key.CategoryName,
+                Amount = g.Sum(x => x.Amount)
+            })
+            .OrderBy(x => x.Year)
+            .ThenBy(x => x.Month)
+            .ToListAsync();
+
+        var result = summary.Select(x => new TransactionMonthSummary
+        {
+            Year = x.Year,
+            Month = new DateTime(x.Year, x.Month, 1).ToString("MMM"),
+            Category = x.CategoryName,
+            Amount = x.Amount
+        }).ToList();
+
+        return new APIResponse<List<TransactionMonthSummary>> { StatusCode = 200, Message = "Summary Retrieved", Data = result };
+    }
 }
