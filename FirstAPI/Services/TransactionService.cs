@@ -117,4 +117,18 @@ public class TransactionService
 
         return new APIResponse<List<TransactionCategorySummary>>{ StatusCode = 200, Message= "Summary Retrieved", Data= summary};
     }
+
+    public async Task<APIResponse<List<TransactionAccountSummary>>> GetByAccount()
+    {
+        var summary = await _db.Transactions.GroupBy(x => new { x.Account.AccountName, x.Category.CategoryName }).Select(g => new TransactionAccountSummary
+        {
+            AccountName = g.Key.AccountName,
+            CategoryName = g.Key.CategoryName,
+            TotalAmount = g.Sum(x => x.Amount)
+        }).ToListAsync();
+
+        return new APIResponse<List<TransactionAccountSummary>>{ StatusCode = 200, Message= "Summary Retrieved", Data= summary};
+    }
+
+    
 }

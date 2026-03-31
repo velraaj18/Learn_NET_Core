@@ -52,5 +52,12 @@ namespace FirstAPI.Controllers
             var response = _service.GetByCategory();
             return response;
         }
+
+        [HttpGet("Account-Summary")]
+        public Task<APIResponse<List<TransactionAccountSummary>>> GetByAccount()
+        {
+            var response = _service.GetByAccount();
+            return response;
+        }
     }
 }
