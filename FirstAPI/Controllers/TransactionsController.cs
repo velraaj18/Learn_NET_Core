@@ -47,24 +47,21 @@ namespace FirstAPI.Controllers
         }
 
         [HttpGet("Category-Summary")]
-        public Task<APIResponse<List<TransactionCategorySummary>>> GetByCategory()
+        public Task<APIResponse<List<TransactionCategorySummary>>> GetByCategory(DateTime? startDate, DateTime? endDate)
         {
-            var response = _service.GetByCategory();
-            return response;
+            return _service.GetByCategory(startDate, endDate);
         }
 
         [HttpGet("Account-Summary")]
-        public Task<APIResponse<List<TransactionAccountSummary>>> GetByAccount()
+        public Task<APIResponse<List<TransactionAccountSummary>>> GetByAccount(DateTime? startDate, DateTime? endDate)
         {
-            var response = _service.GetByAccount();
-            return response;
+            return _service.GetByAccount(startDate, endDate);
         }
 
-        [HttpGet("Monthly-Summary")]
-        public Task<APIResponse<List<TransactionMonthSummary>>> GetByMonth()
+        [HttpGet("Month-Summary")]
+        public Task<APIResponse<List<TransactionMonthSummary>>> GetByMonth(DateTime? startDate, DateTime? endDate)
         {
-            var response = _service.GetByMonth();
-            return response;
+            return _service.GetByMonth(startDate, endDate);
         }
     }
 }

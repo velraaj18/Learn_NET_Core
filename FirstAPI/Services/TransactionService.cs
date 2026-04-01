@@ -107,32 +107,54 @@ public class TransactionService
         return new APIResponse<Transaction> { StatusCode = 200, Message = "Transaction deleted successfully", Data = transaction };
     }
 
-    public async Task<APIResponse<List<TransactionCategorySummary>>> GetByCategory()
+    public async Task<APIResponse<List<TransactionCategorySummary>>> GetByCategory(DateTime? startDate, DateTime? endDate)
     {
-        var summary = await _db.Transactions.GroupBy(x => x.Category.CategoryName).Select(g => new TransactionCategorySummary
-        {
-            CategoryName = g.Key,
-            TotalAmount = g.Sum(x => x.Amount)
-        }).ToListAsync();
+        var query = ApplyDateFilter(_db.Transactions, startDate, endDate);
 
-        return new APIResponse<List<TransactionCategorySummary>> { StatusCode = 200, Message = "Summary Retrieved", Data = summary };
+        var summary = await query
+            .GroupBy(x => x.Category.CategoryName)
+            .Select(g => new TransactionCategorySummary
+            {
+                CategoryName = g.Key,
+                TotalAmount = g.Sum(x => x.Amount)
+            })
+            .ToListAsync();
+
+        return new APIResponse<List<TransactionCategorySummary>>
+        {
+            StatusCode = 200,
+            Message = "Summary Retrieved",
+            Data = summary
+        };
     }
 
-    public async Task<APIResponse<List<TransactionAccountSummary>>> GetByAccount()
+    public async Task<APIResponse<List<TransactionAccountSummary>>> GetByAccount(DateTime? startDate, DateTime? endDate)
     {
-        var summary = await _db.Transactions.GroupBy(x => new { x.Account.AccountName, x.Category.CategoryName }).Select(g => new TransactionAccountSummary
-        {
-            AccountName = g.Key.AccountName,
-            CategoryName = g.Key.CategoryName,
-            TotalAmount = g.Sum(x => x.Amount)
-        }).ToListAsync();
+        var query = ApplyDateFilter(_db.Transactions, startDate, endDate);
 
-        return new APIResponse<List<TransactionAccountSummary>> { StatusCode = 200, Message = "Summary Retrieved", Data = summary };
+        var summary = await query
+            .GroupBy(x => new { x.Account.AccountName, x.Category.CategoryName })
+            .Select(g => new TransactionAccountSummary
+            {
+                AccountName = g.Key.AccountName,
+                CategoryName = g.Key.CategoryName,
+                TotalAmount = g.Sum(x => x.Amount)
+            })
+            .ToListAsync();
+
+        return new APIResponse<List<TransactionAccountSummary>>
+        {
+            StatusCode = 200,
+            Message = "Summary Retrieved",
+            Data = summary
+        };
     }
 
-    public async Task<APIResponse<List<TransactionMonthSummary>>> GetByMonth()
+    public async Task<APIResponse<List<TransactionMonthSummary>>> GetByMonth(DateTime? startDate, DateTime? endDate)
     {
-        var summary = await _db.Transactions
+        var query = ApplyDateFilter(_db.Transactions, startDate, endDate);
+
+        var summary = await query
             .GroupBy(x => new { x.Date.Year, x.Date.Month, x.Category.CategoryName })
             .Select(g => new
             {
@@ -153,6 +175,26 @@ public class TransactionService
             Amount = x.Amount
         }).ToList();
 
-        return new APIResponse<List<TransactionMonthSummary>> { StatusCode = 200, Message = "Summary Retrieved", Data = result };
+        return new APIResponse<List<TransactionMonthSummary>>
+        {
+            StatusCode = 200,
+            Message = "Summary Retrieved",
+            Data = result
+        };
+    }
+
+    // Date filter for all summary query
+    private IQueryable<Transaction> ApplyDateFilter(
+    IQueryable<Transaction> query,
+    DateTime? startDate,
+    DateTime? endDate)
+    {
+        if (startDate.HasValue)
+            query = query.Where(x => x.Date >= startDate.Value);
+
+        if (endDate.HasValue)
+            query = query.Where(x => x.Date <= endDate.Value);
+
+        return query;
     }
 }
