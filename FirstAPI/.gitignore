@@ -21,4 +21,4 @@ Thumbs.db
 *.db
 
 # Environment configs
-appsettings.Development.json
+FirstAPI/appsettings.Development.json
